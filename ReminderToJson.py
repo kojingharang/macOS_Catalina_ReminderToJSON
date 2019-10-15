@@ -1,3 +1,4 @@
+import os
 import glob
 import sqlite3
 import contextlib
@@ -46,7 +47,9 @@ def getTasks(datadir):
 	rs = []
 	for filename in glob.glob(datadir+"/*.sqlite"):
 		sql = """select ZCREATIONDATE, ZCOMPLETIONDATE, ZTITLE1, ZCKIDENTIFIER, ZNAME1, ZREMINDERIDSMERGEABLEORDERING_V2_JSON from ZREMCDOBJECT"""
-		rs += execSQL(filename, sql)
+		lrs = execSQL(filename, sql)
+		rs += lrs
+		print(len(lrs), "tasks extracted from file", filename)
 
 	id2cat = {}
 	for r in rs:
@@ -82,7 +85,8 @@ if __name__=="__main__":
 	argv = sys.argv[1:]+[""*100]
 	datadir = argv[0]
 	if len(datadir)==0:
-		datadir = "~/Library/Application\ Support/Reminders"
+		datadir = os.path.expanduser("~")+"/Library/Reminders/Container_v1/Stores"
+	print("datadir", datadir)
 
 	tasks = getTasks(datadir)
 
