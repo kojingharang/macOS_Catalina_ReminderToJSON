@@ -5,7 +5,11 @@ Reminders data in macOS Catalina to JSON file
 # How to run:
 ```
 python3 ReminderToJson.py
-or
+```
+
+or just
+
+```
 make
 ```
 
